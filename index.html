@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+      #content {
+        max-width: 500px;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <input id="search" placeholder="Please provide search"></br>
+    <button id="newImage">Click to get new image</button></br>
+    <img src="#" />
+    </div>
+    <script>
+      const img = document.querySelector("img");
+      const newImageButton = document.getElementById("newImage");
+      const APIKey = 'https://api.giphy.com/v1/gifs/translate?api_key=j3RPnRPcl1JtDFzQ6vKWybkf0xKWGsoq&s='
+
+      newImageButton.addEventListener("click", () => {
+        let searchValue = document.getElementById('search').value;
+        fetch(
+          `${APIKey}${searchValue}`,
+          { mode: "cors" }
+        )
+          .then(function (response) {
+            console.log(searchValue);
+            return response.json();
+          })
+          .then(function (response) {
+            img.src = response.data.images.original.url;
+          })
+          .catch(function (error) {
+            throw new Error("ERROR HAPPENED WITH THE FETCH");
+          });
+      });
+    </script>
+  </body>
+</html>
